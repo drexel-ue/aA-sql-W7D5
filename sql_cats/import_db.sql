@@ -1,3 +1,5 @@
+-- PHASE 1 ---
+
 DROP TABLE IF EXISTS cattoys;
 DROP TABLE IF EXISTS cats;
 DROP TABLE IF EXISTS toys;
@@ -130,3 +132,66 @@ SELECT *
 FROM cats
     FULL JOIN cattoys ON cats.id = cattoys.cat_id
     FULL JOIN toys ON toys.id = cattoys.toy_id;
+
+
+-- Phase 2: Measuring Performance ---
+
+-- Find all the cats with a particular name
+
+EXPLAIN
+SELECT *
+FROM cats
+WHERE name = 'Sigfriend Tomilson';
+
+-- Find all the toys that belong to a particular cat
+
+EXPLAIN
+SELECT toys.name
+FROM cats
+    FULL JOIN cattoys ON cats.id = cattoys.cat_id
+    FULL JOIN toys ON toys.id = cattoys.toy_id
+WHERE cats.name = 'Sigfriend Tomilson';
+
+
+-- Find all the toys and cats the are a particular color
+
+EXPLAIN
+SELECT cats.name, toys.name
+FROM cats
+    FULL JOIN cattoys ON cats.id = cattoys.cat_id
+    FULL JOIN toys ON toys.id = cattoys.toy_id
+WHERE cats.color = 'Blue' AND toys.color = 'Blue';
+
+-- Find all the toys that belong to a particular breed of cat
+
+EXPLAIN
+SELECT toys.name
+FROM cats
+    FULL JOIN cattoys ON cats.id = cattoys.cat_id
+    FULL JOIN toys ON toys.id = cattoys.toy_id
+WHERE cats.breed = 'Butorides striatus';
+
+-- updating a cat
+
+EXPLAIN
+UPDATE cats
+SET breed = 'APEX PREDATOR'
+WHERE color = 'Orange';
+
+-- deleting a toy
+EXPLAIN
+DELETE FROM toys
+WHERE id = 4;
+-- inserting into the cattoys table.
+
+EXPLAIN
+INSERT INTO cattoys
+    (cat_id, toy_id)
+VALUES
+    (5, 1);
+
+
+-- Building Bigger Tables ---
+
+
+
