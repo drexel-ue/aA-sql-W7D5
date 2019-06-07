@@ -21,11 +21,11 @@ CREATE TABLE toys
 CREATE TABLE cattoys
 (
     id BIGSERIAL NOT NULL PRIMARY KEY,
-    cat_id INTEGER NOT NULL,
-    toy_id INTEGER NOT NULL,
+    cat_id INTEGER,
+    toy_id INTEGER,
 
-    FOREIGN KEY (cat_id) REFERENCES cats(id),
-    FOREIGN KEY (toy_id) REFERENCES toys(id)
+    FOREIGN KEY (cat_id) REFERENCES cats(id) ON DELETE CASCADE,
+    FOREIGN KEY (toy_id) REFERENCES toys(id) ON DELETE CASCADE
 
 );
 
@@ -91,3 +91,42 @@ INSERT INTO cattoys
     (cat_id, toy_id)
 VALUES
     (5, 1);
+
+
+--- PHASE 1a ---
+
+-- update color of one cat
+-- 3 4 5
+UPDATE cats
+SET color = 'Blurple'
+WHERE id = 4;
+
+UPDATE cats
+SET name = 'Sigfried Tomilson'
+WHERE id = 4;
+
+UPDATE cattoys
+SET cat_id = 4
+WHERE toy_id = 3;
+
+-- INSERT INTO cattoys
+--     (cat_id, toy_id)
+-- VALUES
+--     (4, 3);
+
+UPDATE toys
+SET color = 'Sarcoline'
+WHERE id = 1;
+
+SELECT *
+FROM cats
+    FULL JOIN cattoys ON cats.id = cattoys.cat_id
+    FULL JOIN toys ON toys.id = cattoys.toy_id;
+
+DELETE FROM toys
+WHERE id = 4;
+
+SELECT *
+FROM cats
+    FULL JOIN cattoys ON cats.id = cattoys.cat_id
+    FULL JOIN toys ON toys.id = cattoys.toy_id;
