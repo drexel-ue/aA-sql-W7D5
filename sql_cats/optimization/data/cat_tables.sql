@@ -29,6 +29,10 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
+drop table if exists cattoys;
+drop table if exists toys;
+drop table if exists cats;
+
 -- CATS
 
 CREATE TABLE cats

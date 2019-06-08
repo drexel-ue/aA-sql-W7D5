@@ -2,4 +2,4 @@
 
 dropdb meowtime
 createdb meowtime
-psql meowtime < data/cat_tables.sql
+psql catfactory < data/cat_tables.sql
